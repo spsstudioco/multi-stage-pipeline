@@ -1,0 +1,919 @@
+# Complete Prompt Documentation
+## Embroidery Pattern Generator AI Prompts
+
+**Last Updated:** January 2025  
+**Project:** Embroidery Pattern Generator  
+**AI Models Used:** 
+- Mockup Generation: `google/gemini-2.5-flash-image-preview`
+- Tutorial Generation: `google/gemini-2.5-flash`
+- Marketing Generation: `google/gemini-2.5-flash`
+
+---
+
+## Table of Contents
+1. [Mockup Generation Prompts](#mockup-generation-prompts)
+2. [Tutorial Generation Prompt](#tutorial-generation-prompt)
+3. [Marketing Generation Prompt](#marketing-generation-prompt)
+4. [Recent Updates Summary](#recent-updates-summary)
+
+---
+
+## Mockup Generation Prompts
+
+### Color & Stitch Analysis Prompt
+
+**Purpose:** Analyze the line drawing and select appropriate DMC colors and stitch types.
+
+**Prompt:**
+```
+Analyze this embroidery line drawing and select DMC thread colors (2-9 colors) and embroidery stitches based primarily on the colors and visual elements present in the reference image itself.
+
+COLOR SELECTION PRIORITY:
+1. PRIMARY: Choose colors that match or complement the colors visible in the reference image
+2. SECONDARY: [Brand colors if specified] (use as inspiration only if the reference image doesn't have clear color guidance)
+
+Available DMC Colors (choose 2-9 based on the reference image):
+- Black (DMC 310): #000000
+- White (DMC blanc): #FFFFFF
+- Dark Red (DMC 498): #A11B24
+- Bright Red (DMC 666): #EA3B3D
+- Bright Orange (DMC 608): #FE5D28
+- Bright Yellow (DMC 973): #FFD429
+- Light Green (DMC 907): #C6D84D
+- Medium Green (DMC 911): #1F7447
+- Turquoise (DMC 3811): #98D5D9
+- Electric Blue (DMC 3843): #0099CC
+- Royal Blue (DMC 797): #133A7D
+- Dark Purple (DMC 333): #5C3178
+- Lavender (DMC 208): #9370C3
+- Hot Pink (DMC 601): #D83A83
+- Light Pink (DMC 3326): #FFBBCC
+- Light Brown (DMC 435): #A9744E
+- Dark Brown (DMC 938): #3F251B
+- Pearl Gray (DMC 762): #E2E4E3
+- Steel Gray (DMC 318): #9EA49A
+- Dark Gray (DMC 414): #A7A7A7
+
+CRITICAL - You MUST select at least these 4 core stitch types:
+1. Backstitch or Stem Stitch (for outlines and lettering)
+2. Satin Stitch (for smooth filled areas)
+3. Long-and-Short Stitch (for gradients or shaded sections)
+4. French Knots or Seed Stitches (for small accents, dots, or details)
+
+You may add additional stitches from this list:
+- Backstitch: A basic outlining stitch that creates solid lines
+- Running Stitch: Simple dashed line, in and out of fabric
+- Satin Stitch: Parallel straight stitches that fill areas smoothly
+- French Knot: Small raised knots for texture and detail
+- Chain Stitch: Linked loops forming a chain-like line
+- Stem Stitch: Rope-like stitch perfect for stems and outlines
+- Split Stitch: Similar to backstitch but softer, splits previous stitch
+- Lazy Daisy: Single chain stitch forming petal shapes
+- Straight Stitch: Single straight stitch for grass, rays, or short lines
+- Blanket Stitch: Decorative edge stitch with loops
+
+Consider:
+1. Analyze the colors present in the reference image and choose DMC colors that match those
+2. If brand colors are specified, use them as secondary inspiration but prioritize the reference image colors
+3. Use minimum 2 colors, maximum 9 colors
+4. All 4 core stitch types must be included and clearly visible
+5. Additional decorative stitches (lazy daisy, chain stitch, fly stitch) are optional
+
+Respond with a JSON object in this exact format:
+{
+  "colors": ["Color Name (DMC code)", "Color Name (DMC code)", ...],
+  "stitches": ["Backstitch", "Satin Stitch", "Long-and-Short Stitch", "French Knots", ...],
+  "reasoning": "Brief explanation of your choices, specifically noting which colors from the reference image you matched"
+}
+```
+
+**Implementation:** Uses tool calling with the function `select_colors_and_stitches`
+
+---
+
+### Hero Image Prompt (Main Product Photo)
+
+**Purpose:** Generate the main polished product photo - finished embroidery in hoop.
+
+**Prompt:**
+```
+A realistic, photorealistic hand-stitched embroidery of [SUBJECT] displayed in a light wood embroidery hoop (6-8 inches) on neutral linen or cotton fabric (white, cream, or natural beige).
+
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+[BRAND VISUAL AESTHETIC GUIDANCE IF PROVIDED]
+
+Thread Colors ([SELECTED COLORS]) - all threads coordinate with the brand's color palette and use 2-9 total colors from the brand palette.
+
+Stitch Types - The embroidery MUST show at least these 4 distinct, clearly visible stitch types:
+1. Backstitch or Stem Stitch for outlines and any text/lettering
+2. Satin Stitch for smooth filled areas with visible thread sheen
+3. Long-and-Short Stitch for gradients or shaded sections blending colors
+4. French Knots for fine dots, accents, or sparkle details
+
+Additional stitches used: [SELECTED STITCHES]
+
+CRITICAL REQUIREMENTS:
+- Warm, natural lighting with soft shadows and gentle highlights emphasizing thread texture
+- Fabric weave clearly visible in background
+- Thread must show realistic sheen, subtle imperfections, and authentic stitch direction changes
+- Light wooden hoop with visible grain
+- Handmade quality - not perfect, but beautifully crafted
+- This is the polished, Etsy-ready hero product photo
+- All stitches should be clearly distinguishable and realistic
+
+REALISTIC FABRIC MARGIN (CRITICAL):
+- Leave 0.5-1 inch (12-25mm) of empty fabric space between the outer edge of the embroidery design and the inner edge of the wooden hoop
+- This margin is ESSENTIAL for authentic hand embroidery - you cannot stitch right up to the hoop edge in real embroidery
+- The design (including any text/lettering) must be comfortably centered with visible breathing room all around
+- If the embroidery has text or border elements, they must stay well within the fabric area, not crowding the hoop
+- The hoop should frame the design with natural spacing, not appear to be cutting it off
+
+AUTHENTIC HAND-STITCHED TEXT/LETTERING REQUIREMENTS (if text is present):
+Text must look authentically hand-embroidered, NOT computer-generated fonts. Follow these characteristics:
+
+1. STITCH TECHNIQUE:
+   - Use backstitch or stem stitch for all lettering
+   - Each letter formed by individual visible stitches, not solid lines
+   - Stitch length varies naturally (1-3mm typical range with organic variation)
+   - Stitches follow letter curves with natural hand movement
+
+2. ORGANIC IMPERFECTIONS (essential for authenticity):
+   - Letters have slight wobbles and irregularities - not machine-perfect
+   - Letter height varies subtly (within 5-10% natural variation)
+   - Baseline has gentle organic waves, not laser-straight
+   - Curves in letters (O, C, S) show natural hand-stitched flow with visible stitch changes
+   - No perfectly straight lines - everything has subtle natural curves
+
+3. LETTER CHARACTERISTICS:
+   - Letter spacing has organic variation (not perfectly uniform like fonts)
+   - Letter width naturally varies based on hand-stitching
+   - Crossbars and horizontal strokes show individual stitch segments
+   - Letter connections (in script) show natural thread flow with visible entry/exit points
+
+4. VISUAL TEXTURE:
+   - Individual stitches clearly visible - not blended into solid shapes
+   - Thread has dimension and depth from varying tension
+   - Slight gaps between stitches create authentic handmade appearance
+   - Thread catches light differently along each stitch creating natural variation
+
+5. WHAT TO AVOID:
+   - DO NOT create perfect, uniform font-like letters
+   - DO NOT make letters look digitally printed or computer-generated
+   - DO NOT use satin stitch fill for letters (unless specifically in reference)
+   - DO NOT create perfectly smooth, vectorized letter shapes
+   - Text should never look like typography - it must look hand-stitched
+
+6. REFERENCE AUTHENTIC HAND EMBROIDERY:
+   - Study real backstitch embroidery lettering examples
+   - Letters should look like someone patiently stitched each one by hand
+   - Embrace the beautiful imperfections of handcraft
+   - Think vintage sampler aesthetics, not modern screen printing
+
+DO NOT ADD TEXT, TITLES, OR WORDS TO THE EMBROIDERY unless they appear in the line drawing reference image. Strictly follow the approved line drawing design without adding extra text elements.
+```
+
+**Inputs:**
+- Line drawing image URL
+- AI-selected colors and stitches
+- Optional: Brand visual aesthetic guidance
+- Optional: User regeneration instructions
+
+---
+
+### Variation 1: Line Drawing Pattern
+
+**Purpose:** Generate a clean, printable line drawing pattern.
+
+**Prompt:**
+```
+A clean, single-line embroidery pattern illustration of [SUBJECT], drawn in smooth, even black or dark gray outlines on a transparent or white background. This is a simplified, traceable line drawing suitable for printing or transferring onto fabric. No shading, no fill colors - only clean outlines. The design should be clear and easy to follow for hand embroidery.
+
+DO NOT ADD TEXT, TITLES, OR WORDS unless they appear in the reference line drawing. Only include what is in the original design.
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL only (does NOT use hero image reference)
+
+---
+
+### Variation 2: Detail Close-Up
+
+**Purpose:** Show macro close-up of stitch texture and detail.
+
+**Prompt:**
+```
+CRITICAL: You must recreate THE EXACT SAME embroidery shown in the reference image. This is a macro close-up of that identical piece.
+
+A macro or extreme close-up photograph focusing on the texture and stitch detail of this EXACT embroidery. Show thread direction, stitch variation, and 3D depth.
+
+MANDATORY REQUIREMENTS:
+- The embroidery design, colors ([SELECTED COLORS]), and stitches ([SELECTED STITCHES]) must be IDENTICAL to the reference image
+- Same character, same details, same color placement
+- Only difference: extreme close-up view showing texture
+- Same fabric tone (neutral linen/cotton)
+- Side lighting to create depth and shadows
+- Focus on: raised stitches, thread sheen, fabric texture weave
+- Show at least 2-3 of the 4 core stitch types up close
+- If hoop edge is visible in frame, ensure proper margin spacing (0.5-1 inch fabric border between design and hoop)
+
+IF TEXT IS VISIBLE IN CLOSE-UP:
+- Text must show authentic hand-stitched characteristics: individual backstitch or stem stitch segments clearly visible
+- Natural irregularities in letter shapes and spacing
+- Visible stitch length variation (not uniform font-like appearance)
+- Thread dimension showing individual stitch depth and texture
+- NO computer-generated or perfectly uniform font appearance
+
+DO NOT ADD TEXT, TITLES, OR WORDS unless they appear in the reference embroidery. Only show what is in the original design.
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL
+- Hero embroidery image URL (as reference for what to replicate)
+
+---
+
+### Variation 3: In-Progress Stitching
+
+**Purpose:** Show hands actively embroidering a partially completed piece.
+
+**Prompt:**
+```
+CRITICAL: You must show THE EXACT SAME embroidery design from the reference image, but only 30-40% completed.
+
+A realistic photograph showing a person actively embroidering this EXACT [SUBJECT] design in the same light wood hoop and neutral fabric. The piece is partially completed - some areas are fully stitched while others show only outline or are empty.
+
+MANDATORY REQUIREMENTS:
+- The completed areas must show the EXACT design, colors ([SELECTED COLORS]), and stitches ([SELECTED STITCHES]) from the reference image
+- About 30-40% of the design is complete
+- The finished sections must be IDENTICAL to the reference - same character, same details, same color placement
+- One hand holds the hoop, the other pulls a threaded needle through the fabric
+- Realistic embroiderer's hands in natural position
+- Include nearby props: small scissors, 1-2 DMC floss skeins in brand colors
+- Warm, natural window lighting
+- Wooden tabletop or neutral surface beneath
+- Captured mid-stitch showing the meditative process
+- Shallow depth of field with focus on the stitching area
+- Ensure proper fabric margin (0.5-1 inch) between design edge and hoop - essential for realistic hand embroidery
+
+IF TEXT IS VISIBLE (in completed sections):
+- Text must look authentically hand-stitched with backstitch or stem stitch
+- Individual stitches clearly visible, not font-like
+- Natural irregularities and organic spacing
+- Thread shows dimension and realistic texture
+- NO computer-generated appearance
+
+DO NOT ADD TEXT, TITLES, OR WORDS to the embroidery unless they appear in the reference design. Only stitch what is in the original line drawing.
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL
+- Hero embroidery image URL (as reference)
+
+---
+
+### Variation 4: Styled Display Mockup
+
+**Purpose:** Show finished embroidery in a cozy home setting.
+
+**Prompt:**
+```
+CRITICAL: This must be THE EXACT SAME finished embroidery from the reference image, just displayed in a different setting.
+
+The finished embroidery of [SUBJECT] displayed decoratively in a cozy, minimalist home setting. The embroidery sits in its light wood hoop on a table, shelf, or wall.
+
+MANDATORY REQUIREMENTS:
+- The embroidery in this scene must be IDENTICAL to the reference image
+- Exact same design, colors ([SELECTED COLORS]), stitches ([SELECTED STITCHES])
+- Exact same character and details - this is the same physical piece
+- Only difference: displayed in a cozy home setting instead of product shot
+- Warm lighting tone consistent with reference
+- Accompanied by a few soft props: small potted plant, thread spools, or scissors
+- Clean, warm, handmade aesthetic
+- The embroidery is the focal point
+- Natural, inviting home decor atmosphere
+- Same neutral fabric and light wood hoop
+- Proper fabric margin visible (0.5-1 inch between design and hoop edge) for authentic appearance
+
+IF TEXT IS VISIBLE:
+- Text must appear authentically hand-stitched (backstitch/stem stitch with visible individual stitches)
+- Natural imperfections and organic character spacing
+- NO font-like or computer-generated appearance
+- Thread texture and dimension clearly visible
+
+DO NOT ADD TEXT, TITLES, OR WORDS to the embroidery unless they appear in the reference design. Only show what is in the original piece.
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL
+- Hero embroidery image URL (as reference)
+
+---
+
+### Variation 5: Flat Lay of Materials
+
+**Purpose:** Product photography showing all materials needed (with pattern protection).
+
+**Prompt:**
+```
+CRITICAL: The finished embroidery shown in this flat lay must be THE EXACT SAME piece from the reference image.
+
+A flat lay composition showing the materials and tools needed for the [SUBJECT] embroidery pattern. Top-down view on a light wooden or white neutral surface.
+
+MUST INCLUDE:
+1. The EXACT finished embroidery from the reference image (must be identical)
+2. Printed pattern sheet showing the line drawing version
+3. Light wooden embroidery hoop (6-8 inches)
+4. Folded neutral fabric (white, cream, or natural beige linen/cotton)
+5. 3-9 skeins of DMC embroidery floss in these colors: [SELECTED COLORS]
+6. Embroidery needles
+7. Small embroidery scissors
+
+MANDATORY REQUIREMENTS:
+- The finished embroidery must be IDENTICAL to the reference image - same design, same colors, same stitches
+- Items arranged neatly with breathing room between elements
+- Soft, even natural lighting
+- Clean, minimal product photography aesthetic
+- Professional Etsy listing photo quality
+- All colors coordinate with brand identity
+- Proper fabric margin visible on finished piece (0.5-1 inch between design and hoop)
+
+PATTERN PROTECTION (CRITICAL FOR LISTING IMAGES):
+- The printed pattern sheet must be PARTIALLY OBSCURED by the wooden hoop, fabric, or embroidery tools
+- DO NOT show the complete pattern design clearly visible - customers should not be able to copy it from the photo
+- The pattern should be artfully positioned so key parts are hidden under other items in the flat lay
+- Pattern paper can be visible, but the actual line drawing should be mostly covered or at an angle that prevents copying
+- This is essential to protect the digital product from being replicated from listing photos
+
+DO NOT ADD TEXT, TITLES, OR WORDS to the embroidery or pattern sheet unless they appear in the reference design.
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL
+- Hero embroidery image URL (as reference)
+
+---
+
+### Variation 6: Marketing Photo (Vertical Social Media)
+
+**Purpose:** Create vertical marketing image for Pinterest/Instagram with text overlays.
+
+**Prompt:**
+```
+CRITICAL: The embroidery shown in this marketing image must be THE EXACT SAME piece from the reference image.
+
+A vertical Pinterest/Instagram marketing image (1080×1350 aspect ratio) promoting the [SUBJECT] embroidery pattern. This is a promotional graphic designed for social media feeds.
+
+EMBROIDERY (MANDATORY IDENTICAL):
+- The finished embroidery must be EXACTLY the same as the reference image
+- Same design, same colors ([SELECTED COLORS]), same stitches ([SELECTED STITCHES])
+- Same character and all details - this is the same physical piece
+- Same light wood hoop and neutral fabric
+- Proper fabric margin visible (0.5-1 inch between design and hoop edge)
+
+DO NOT ADD TEXT, TITLES, OR WORDS TO THE EMBROIDERY ITSELF unless they appear in the reference line drawing. The embroidery must strictly follow the approved design.
+
+LAYOUT:
+- Vertical orientation (portrait, taller than wide)
+- Finished embroidery (from reference) in hoop as focal point
+- Surrounded by scissors, thread skeins, pattern sheet, or styled props
+- Leave open space at top or bottom for text overlay (OUTSIDE the embroidery area)
+- Bright, natural lighting
+
+TEXT OVERLAY REQUIREMENTS (for marketing graphics AROUND the photo, NOT on the embroidery):
+Add clean, minimal text overlays OUTSIDE the embroidery area, using the brand color palette ([BRAND COLORS]):
+
+[Top Section - in brand primary color]
+"Embroidery Pattern PDF" or "Digital Embroidery Design"
+
+[Middle Section - design title]
+"[SUBJECT] Pattern" or "[SUBJECT] Embroidery Design"
+
+[Bottom Section - details]
+"Includes printable pattern + stitch guide"
+"Perfect for beginners"
+"Download instantly!"
+
+TYPOGRAPHY & COLOR:
+- Use maximum 2 fonts (one for headings, one for body)
+- Text must be readable at mobile size
+- Brand primary color for headings
+- Neutral or brand secondary color for supporting text
+- Excellent contrast between text and background
+- Text placed in clear negative space zones AROUND the embroidery
+- Do not obscure embroidery details
+- Text overlay is ONLY for the marketing graphic frame, NOT stitched on the embroidery
+
+- Embroidery from reference must be identical
+- Bright, uplifting mood with natural lighting
+- High resolution, Pinterest and Instagram ready
+- Text overlay cleanly integrated in negative space
+- Brand color palette used throughout
+[ADDITIONAL USER INSTRUCTIONS IF PROVIDED]
+```
+
+**Inputs:**
+- Line drawing image URL
+- Hero embroidery image URL (as reference)
+- Brand color palette
+
+---
+
+## Tutorial Generation Prompt
+
+**Purpose:** Generate step-by-step embroidery tutorial with materials list and instructions.
+
+**System Context:**
+- Model: `google/gemini-2.5-flash`
+- Max Tokens: 4000
+- Inputs: Line drawing URL, mockup URL, brand information, brand voice content (optional)
+
+**Prompt:**
+```
+[IF BRAND VOICE CONTENT EXISTS:]
+## Brand Creative System
+[BRAND VOICE CONTENT TEXT]
+
+CRITICAL: Create this tutorial EXACTLY as the brand creative system directs. Match the voice, tone, personality, humor style, content structure, and all creative guidelines specified above. Every word should embody the brand character.
+
+**CONTENT SAFETY RULE**: Do NOT include profanity, explicit language, or inappropriate terms (including but not limited to: bitch, fuck, shit, ass, etc.) in the tutorial instructions. Keep humor and personality while maintaining professional language suitable for all audiences.
+
+[IF NO BRAND VOICE - FALLBACK:]
+Create a clear, concise embroidery tutorial for [TARGET AUDIENCE]. Use [TONE] tone and [STYLE KEYWORDS] style.
+
+Analyze the line drawing and mockup images to create the tutorial.
+
+STRUCTURE:
+
+1. INTRODUCTION (2 sentences):
+   - What they're creating and skill level
+
+2. MATERIALS LIST:
+   **Materials Needed:**
+   - Fabric: [type and size]
+   - Embroidery hoop: [size]
+   - DMC Embroidery Floss: [specific DMC codes with colors]
+   - Stitches used: [list stitch types]
+   - Additional supplies: [needle, scissors, marking pen]
+
+3. STEP-BY-STEP INSTRUCTIONS:
+   Divide into logical sections. For each section:
+   - State the section name clearly
+   - Specify DMC color and stitch type
+   - Give clear, direct instructions
+   - Include key technique tips (thread length ~18", 2 strands, stitch size ~1/8")
+   
+   Example:
+   **Section 1: Outline**
+   Outline the main shape with DMC 310 (Black). Use backstitch with 2 strands, 18" thread length. Keep stitches 1/8" long for smooth lines.
+
+GUIDELINES:
+- Be direct and action-oriented
+- Focus on technique over description
+- Keep instructions clear and concise
+- If brand creative system is specified, follow it EXACTLY - match the personality, humor, supportive tone, and all creative guidelines
+- [IF BRAND VOICE EXISTS:] Balance instruction with brand personality (e.g., humorous asides, relatable commentary, supportive energy)
+- [IF NO BRAND VOICE:] Match [TONE] tone without excess fluff
+
+Return in markdown format with clear headings.
+```
+
+**Brand Voice Integration:**
+- If brand voice content URL is provided, fetches and includes full text
+- Prioritizes master creative prompt over individual brand elements (tone, keywords, etc.)
+- Includes content safety rules to avoid profanity while maintaining personality
+
+---
+
+## Marketing Generation Prompt
+
+**Purpose:** Generate comprehensive Etsy-optimized marketing content including title, description, tags, and social media posts.
+
+**System Context:**
+- Model: `google/gemini-2.5-flash`
+- Uses tool calling with structured JSON output
+- Function name: `generate_marketing_content`
+
+### System Prompt
+
+```
+You are an expert Etsy SEO specialist and marketing professional with deep knowledge of:
+- Etsy's search algorithm and ranking factors
+- Google SEO best practices for e-commerce
+- Social media marketing for handmade/craft products
+- Current trends in embroidery and craft marketplaces
+
+[IF BRAND VOICE CONTENT EXISTS:]
+## Brand Creative System
+[BRAND VOICE CONTENT TEXT]
+
+CRITICAL: All content you generate MUST perfectly embody this brand's voice, personality, tone, and creative direction. Follow every guideline, match the humor style, energy, and character exactly. This is not optional - it defines the entire output.
+
+Your goal is to create highly optimized, conversion-focused marketing content that maximizes visibility on Etsy and drives sales while staying 100% true to the brand voice and creative system.
+```
+
+### User Prompt
+
+```
+Create comprehensive Etsy-optimized marketing content for this embroidery design that [PERFECTLY EMBODIES THE BRAND CREATIVE SYSTEM / IS OPTIMIZED FOR SEARCH AND SALES].
+
+BRAND INFORMATION:
+- Brand Name: [NAME]
+- Description: [DESCRIPTION]
+- Primary Color: [COLOR]
+- Secondary Color: [COLOR]
+- Tone: [TONE]
+- Style Keywords: [KEYWORDS]
+- Target Audience: [AUDIENCE]
+
+[IF BRAND VOICE EXISTS:]
+⚠️ CRITICAL: The brand creative system above defines EVERYTHING about how you write. Match the voice, personality, humor, energy, and all creative guidelines EXACTLY. Every sentence should feel like it was written by someone who fully embodies this brand. Avoid generic craft language - use the unique voice specified.
+
+USER-PROVIDED PRODUCT DETAILS:
+[Product description, key features, materials, price range, target keywords if provided]
+[If none provided: "No specific product details provided - use the tutorial content and brand information to infer appropriate details."]
+
+TUTORIAL CONTENT (for context):
+[TUTORIAL CONTENT OR "No tutorial content available."]
+
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+## CRITICAL SEO & QUALITY REQUIREMENTS
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+
+### 1. SEO ALGORITHM BOOST
+- **Prioritize clear, keyword-rich phrasing** at the start of titles and in the first 100-150 words of descriptions
+- **Use keyword clusters** based on current Etsy trends:
+  • funny embroidery pattern
+  • digital embroidery pdf
+  • christmas embroidery pattern
+  • handmade gift for adults
+  • modern hand embroidery
+  • diy craft therapy
+- **Rotate synonyms and natural phrasing** — NO keyword stuffing or repetition
+- **Include BOTH seasonal AND evergreen keywords** in every listing:
+  • Seasonal: Christmas, Holiday, Winter Craft, Gift
+  • Evergreen: Funny Embroidery, PDF Pattern, Digital Download
+
+### 2. PERFORMANCE PRIORITY RANKING
+When balancing brand tone vs. algorithm rules, follow this order:
+1. **Clarity of what the product is** (most important)
+2. **Keyword positioning** (first 150 words)
+3. **Tone and humor**
+4. **Length and readability**
+5. **Meta consistency** (tags, title, description alignment)
+
+### 3. TONE CONTROL RULES
+- Maintain brand's snarky charm BUT make it **SEO-legible**
+- Etsy scans for **literal product words first**
+- Humor should **wrap around searchable phrases**, NOT replace them
+- ✅ GOOD: "This Christmas embroidery pattern delivers festive chaos in thread form."
+- ❌ BAD: "Stab some fabric and cry glitter tears of joy." (funny but not searchable)
+- Keep humor sharp but accessible
+- Avoid deep internet in-jokes that may lower discoverability
+
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+
+CRITICAL ETSY SEO REQUIREMENTS:
+
+**TITLE (140 characters max - Etsy's official limit):**
+CRITICAL: Follow Etsy's official title guidance:
+- **START WITH PRODUCT TYPE** (e.g., "Embroidery Pattern", "Hand Embroidery Design")
+- Include format upfront: **PDF, Digital Download** (algorithm signal)
+- Include the most important traits: primary color, size/dimensions, seasonal keyword
+- Streamline for clarity and scannability - aim for less than 15 words
+- Use natural, readable language - avoid keyword stuffing
+- Only include holidays/occasions if essential to the item
+- Do NOT repeat words or phrases
+- Do NOT include subjective words (beautiful, perfect, amazing)
+- Do NOT mention price, shipping, or sales
+- Use colons to separate main item from details for better scannability
+- Example format: "Hand Embroidery Pattern PDF: [Specific Design] [Key Details]"
+- Example: "Floral Embroidery Pattern PDF: Beginner Friendly 5x7 Hoop"
+
+**DESCRIPTION (detailed, multi-paragraph):**
+CRITICAL STRUCTURE — Follow this EXACT layout:
+
+**FIRST LINE (Human Hook):**
+- Always open with a human hook BEFORE introducing the product
+- Examples: "Finally, a holiday craft that doesn't take itself too seriously." / "Turns out, stabbing fabric is cheaper than therapy."
+- Make it relatable and search-friendly
+
+**Paragraph 1 (The What):**
+- Start with "Digital download" or "PDF embroidery pattern" (algorithm signal)
+- Crystal clear item description with main keywords in first 100-150 words
+- What the item is, what's included, key features
+
+**Paragraph 2 (The Why/Benefit):**
+- Add ONE "benefit line" explaining what the buyer gains
+- Examples: stress relief, creative focus, humor therapy, mindfulness practice
+- Unique selling points, quality details, use cases
+
+**Paragraph 3 (Skill Level — CRITICAL):**
+- ALWAYS include phrase like "perfect for beginner to intermediate stitchers" (matches Etsy filters)
+- Mention specific techniques or difficulty indicators
+- Variations available (if any), customization options
+
+**Paragraph 4 (Brand Story):**
+- Your expertise/brand story (2-3 sentences)
+- Keep it brief and on-brand
+
+**Final CTA (Call to Action):**
+- End with brand-consistent but SEO-aware CTA
+- Example: "Download instantly and start stitching your chaos into art."
+
+- Use natural language, avoid keyword stuffing
+- Include dimensions, materials, colors
+- Be specific about what buyer receives (digital file format, print instructions, etc.)
+
+**13 TAGS (Etsy allows 13 tags):**
+CRITICAL TAG GENERATION LOGIC:
+
+**Mix broad and niche (half/half):**
+- 6-7 broad tags: "embroidery pattern", "digital pdf", "funny craft"
+- 6-7 niche tags: "snarky gift", "pickle rick embroidery", "craft therapy"
+
+**Include at least:**
+- ONE intent-based tag: "stress relief craft", "funny handmade gift", "therapeutic hobby"
+- ONE material-based tag: "pdf pattern", "embroidery tutorial", "digital download"
+
+**Tag Structure Formula:**
+[Core Keyword] + [Audience/Use Case] + [Holiday/Seasonal or Emotion Keyword]
+
+**Examples:**
+- funny embroidery pattern, christmas craft, digital embroidery pdf, adult crafts, holiday needlework, modern hoop art, stress relief project, snarky gift idea
+
+**Tag Requirements:**
+- Mix of broad and specific tags
+- Include multi-word phrases (up to 20 characters per tag)
+- Use actual search terms shoppers use
+- Cover: item type, style, technique, occasion, recipient, emotions, materials
+- Return as a simple comma-separated string that users can copy directly into Etsy
+- Each tag should be unique and add value
+- Format: "tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9, tag10, tag11, tag12, tag13"
+
+**LISTING DETAILS:**
+- Category suggestions
+- Attributes (color, size, occasion, etc.)
+- Who it's for (target customer)
+- When to use (occasions/use cases)
+- Price point suggestions based on market
+
+**VISUAL & METADATA OPTIMIZATION:**
+When suggesting listing optimization, include:
+- **Image filename suggestion**: Rename with descriptive, keyword-rich filename (e.g., "pickle-rick-christmas-embroidery-pattern.jpg")
+- **Alt text recommendation**: Short, accessible, SEO-friendly alt text (e.g., "Funny Christmas pickle embroidery pattern in hoop")
+- These should be included in the listing details or SEO tips section
+
+**INSTAGRAM POST:**
+- Hook in first line (people decide in 2 seconds)
+- 3-5 short paragraphs with line breaks
+- Include call-to-action
+- 15-20 relevant hashtags mixing popular and niche
+- Emojis where appropriate
+- Focus on lifestyle/inspiration/process
+
+**PINTEREST POST:**
+- SEO-optimized pin title (under 100 chars)
+- Keyword-rich description (under 500 chars)
+- Include search terms like "how to", "DIY", "tutorial"
+- Call-to-action to click through
+
+**SEARCH OPTIMIZATION TIPS:**
+- Best posting times on Etsy
+- Seasonal opportunities
+- Related search terms to monitor
+- Suggested product variations
+- Include image filename and alt text suggestions here
+
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+## OUTPUT REFINEMENT CHECKLIST
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+
+Before finalizing your output, verify EVERY item on this checklist:
+✅ Does the title START with what the item is (product type)?
+✅ Does the title include "PDF" or "Digital Download" upfront?
+✅ Are 2-3 key search phrases in the first 150 words of the description?
+✅ Does the description start with a human hook?
+✅ Does paragraph 1 mention "Digital download" or "PDF embroidery pattern"?
+✅ Is there a benefit line explaining what the buyer gains?
+✅ Does it include "perfect for beginner to intermediate stitchers" or similar?
+✅ Does humor ENHANCE clarity rather than obscure it?
+✅ Do the tags reflect audience intent, season, AND format?
+✅ Are tags a 50/50 mix of broad and niche?
+✅ Is there at least ONE seasonal AND ONE evergreen keyword?
+✅ Is there at least ONE intent-based tag and ONE material-based tag?
+
+If ANY item is not checked, adjust wording — don't add new sections. Keep structure intact.
+
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
+
+Format your response as JSON with this structure:
+{
+  "title": "string (follow Etsy guidance: clear, concise, under 15 words, no repetition)",
+  "description": "string (multi-paragraph)",
+  "tags": "string (comma-separated for easy copy-paste: tag1, tag2, tag3, ...)",
+  "listingDetails": {
+    "category": "string",
+    "attributes": ["attr1", "attr2", ...],
+    "targetCustomer": "string",
+    "occasions": ["occasion1", "occasion2", ...],
+    "suggestedPriceRange": "string"
+  },
+  "instagramPost": {
+    "caption": "string",
+    "hashtags": ["tag1", "tag2", ...]
+  },
+  "pinterestPost": {
+    "title": "string",
+    "description": "string"
+  },
+  "seoTips": {
+    "bestPostingTimes": ["time1", "time2", ...],
+    "seasonalOpportunities": ["opp1", "opp2", ...],
+    "relatedSearchTerms": ["term1", "term2", ...],
+    "suggestedVariations": ["var1", "var2", ...]
+  }
+}
+```
+
+**Brand Voice Integration:**
+- Fetches brand voice content from URL if provided
+- Integrates throughout system and user prompts
+- Emphasizes exact matching of voice, personality, humor, energy
+- Warns against generic craft language when brand voice is specified
+
+---
+
+## Recent Updates Summary
+
+### Mockup Generation Updates
+
+#### ✅ Realistic Fabric Margin Requirements (Latest Update)
+**Problem:** Embroidery designs were appearing too close to hoop edges, looking unrealistic  
+**Solution:** Added explicit margin requirements to all mockup prompts:
+- 0.5-1 inch (12-25mm) empty fabric space between design and hoop edge
+- Emphasized this is ESSENTIAL for authentic hand embroidery
+- Applied to: Hero image, detail close-up, in-progress, styled display, flat lay, marketing photo
+
+#### ✅ Hand-Stitched Text Authenticity Guidelines
+**Problem:** Text in mockups looked computer-generated and font-like, not hand-stitched  
+**Solution:** Added comprehensive text authenticity requirements:
+- Individual visible stitches (backstitch/stem stitch)
+- Natural irregularities and organic spacing
+- Visible stitch length variation (1-3mm)
+- Thread dimension and texture
+- Explicit instructions on what to avoid (perfect uniform fonts, digital appearance)
+- Applied to: Hero image, detail close-up, in-progress, styled display
+
+#### ✅ Pattern Protection for Flat Lay
+**Problem:** Pattern was fully visible in listing photos, allowing copying  
+**Solution:** Added pattern obscuring instructions:
+- Pattern sheet must be PARTIALLY OBSCURED by hoop, fabric, or tools
+- Key parts hidden under other items in the flat lay
+- Pattern paper visible but actual line drawing mostly covered or angled
+- Protects digital product from being replicated from listing photos
+
+#### ✅ No Unwanted Text Addition
+**Problem:** AI was adding project titles or text to mockups not in original design  
+**Solution:** Added explicit instructions to all 7 mockup variations:
+- "DO NOT ADD TEXT, TITLES, OR WORDS TO THE EMBROIDERY unless they appear in the line drawing reference image"
+- "Strictly follow the approved line drawing design without adding extra text elements"
+- For marketing photo: Clarified text overlays are OUTSIDE embroidery area only
+
+### Tutorial Generation Updates
+
+#### ✅ Brand Voice Integration
+**Status:** Fully integrated with master creative prompt prioritization  
+**Features:**
+- Fetches brand voice content from URL if provided
+- Uses as primary guide over individual brand elements
+- Maintains brand personality throughout tutorial
+
+#### ✅ Content Safety Rules
+**Added:** Explicit profanity filter while maintaining personality  
+**Rule:** "Do NOT include profanity, explicit language, or inappropriate terms (including but not limited to: bitch, fuck, shit, ass, etc.)"  
+**Balance:** Keep humor and personality while maintaining professional language
+
+#### ✅ Clear Structure Requirements
+**Format:**
+1. Introduction (2 sentences)
+2. Materials List (with specific DMC codes, stitch types)
+3. Step-by-Step Instructions (logical sections with technique tips)
+
+### Marketing Generation Updates
+
+#### ✅ Enhanced SEO & Quality Controls (Latest Update - January 2025)
+**Performance Priority Ranking:** Clear hierarchy for balancing brand voice with algorithm optimization:
+1. Clarity of what the product is (most important)
+2. Keyword positioning (first 150 words)
+3. Tone and humor
+4. Length and readability
+5. Meta consistency (tags, title, description alignment)
+
+**Keyword Cluster System:**
+- Trending keyword clusters: funny embroidery pattern, digital embroidery pdf, christmas embroidery pattern, handmade gift for adults, modern hand embroidery, diy craft therapy
+- Rotate synonyms and natural phrasing (no keyword stuffing)
+- **BOTH seasonal AND evergreen keywords required** in every listing
+
+**Tone Control Rules:**
+- Humor must be **SEO-legible** and wrap around searchable phrases
+- ✅ Good: "This Christmas embroidery pattern delivers festive chaos in thread form."
+- ❌ Bad: "Stab some fabric and cry glitter tears of joy." (funny but not searchable)
+- Avoid deep internet in-jokes that lower discoverability
+
+#### ✅ Structured Description Format (New Requirements)
+**FIRST LINE:** Human hook before product intro
+- Examples: "Finally, a holiday craft that doesn't take itself too seriously."
+- Must be relatable AND search-friendly
+
+**Paragraph Structure:**
+1. **The What:** Start with "Digital download" or "PDF embroidery pattern" (algorithm signal), main keywords in first 100-150 words
+2. **The Why/Benefit:** ONE benefit line explaining buyer gains (stress relief, creative focus, humor therapy)
+3. **Skill Level (CRITICAL):** ALWAYS include "perfect for beginner to intermediate stitchers" (matches Etsy filters)
+4. **Brand Story:** Brief expertise mention (2-3 sentences)
+5. **Final CTA:** Brand-consistent but SEO-aware (e.g., "Download instantly and start stitching your chaos into art.")
+
+#### ✅ Enhanced Tag Logic (50/50 Mix)
+**Structure Formula:** [Core Keyword] + [Audience/Use Case] + [Holiday/Seasonal or Emotion Keyword]
+
+**Required Elements:**
+- 6-7 broad tags: "embroidery pattern", "digital pdf", "funny craft"
+- 6-7 niche tags: "snarky gift", "pickle rick embroidery", "craft therapy"
+- At least ONE intent-based tag: "stress relief craft", "funny handmade gift", "therapeutic hobby"
+- At least ONE material-based tag: "pdf pattern", "embroidery tutorial", "digital download"
+
+**Example Set:**
+funny embroidery pattern, christmas craft, digital embroidery pdf, adult crafts, holiday needlework, modern hoop art, stress relief project, snarky gift idea
+
+#### ✅ Visual & Metadata Optimization
+**Filename Suggestions:** Descriptive, keyword-rich (e.g., "pickle-rick-christmas-embroidery-pattern.jpg")
+**Alt Text Recommendations:** Short, accessible, SEO-friendly (e.g., "Funny Christmas pickle embroidery pattern in hoop")
+*Included in listing details or SEO tips section*
+
+#### ✅ Output Refinement Checklist (12-Point Verification)
+Before finalizing, verify:
+- ✅ Title starts with product type and includes "PDF"/"Digital Download" upfront
+- ✅ 2-3 key search phrases in first 150 words of description
+- ✅ Description starts with human hook
+- ✅ Paragraph 1 mentions "Digital download" or "PDF embroidery pattern"
+- ✅ Benefit line explaining buyer gains
+- ✅ Includes "perfect for beginner to intermediate stitchers" or similar
+- ✅ Humor enhances clarity rather than obscures it
+- ✅ Tags reflect audience intent, season, AND format
+- ✅ Tags are 50/50 mix of broad and niche
+- ✅ At least ONE seasonal AND ONE evergreen keyword
+- ✅ At least ONE intent-based tag and ONE material-based tag
+- ✅ Meta consistency across title, tags, and description
+
+#### ✅ Etsy-Specific SEO Optimization
+**Title Requirements:**
+- 140 character max (Etsy's official limit)
+- **START WITH PRODUCT TYPE** and include format upfront (PDF, Digital Download)
+- Streamlined for scannability (under 15 words)
+- No keyword stuffing, no subjective words
+- Colon-separated format for clarity
+
+**Tag Formatting:**
+- 13 tags (Etsy's limit)
+- Comma-separated string for easy copy-paste
+- Mix of broad and specific (up to 20 chars each)
+- Actual shopper search terms
+
+#### ✅ Brand Voice Throughout All Marketing
+**Integration:** Brand creative system drives all content generation  
+**Emphasis:** "Match the voice, personality, humor, energy, and all creative guidelines EXACTLY"  
+**Application:** Title, description, Instagram, Pinterest, SEO tips
+
+#### ✅ Multi-Platform Content
+**Includes:**
+- Etsy listing (title, description, tags, details)
+- Instagram post (caption with hook, hashtags, emojis)
+- Pinterest post (SEO-optimized title and description)
+- SEO tips (posting times, seasonal opportunities, related searches, variations, image filename/alt text suggestions)
+
+---
+
+## Notes on Prompt Maintenance
+
+### Key Principles
+1. **Consistency:** All mockup variations reference the hero image to maintain design consistency
+2. **Authenticity:** Emphasis on hand-crafted imperfections, realistic textures, authentic techniques
+3. **Brand Voice:** When provided, brand creative system drives ALL content generation
+4. **Protection:** Pattern obscuring and no text addition protect the digital product
+5. **SEO Optimization:** Marketing content follows platform-specific best practices
+
+### Future Considerations
+- Prompt versioning system for tracking changes over time
+- A/B testing framework for comparing prompt variations
+- User feedback integration for continuous optimization
+- Custom prompt editing capability for advanced users
+
+---
+
+**Document Version:** 1.0  
+**Last Reviewed:** January 2025  
+**Maintained By:** Embroidery Pattern Generator Project
